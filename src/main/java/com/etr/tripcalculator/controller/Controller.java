@@ -26,7 +26,7 @@ public class Controller {
 
     @PostMapping("/trip")
     public ResponseEntity<Trip> login(@RequestBody Trip trip) throws IOException {
-        Interchanges interchanges = calculator.readInterChangesJSONFile();
+        Interchanges interchanges = calculator.readInterChangesJSONFile("interchanges.json");
 
         Double distance = calculator.calculateDistance(trip.getSource(),trip.getDestination(),interchanges);
 

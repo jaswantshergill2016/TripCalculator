@@ -28,7 +28,7 @@ public class TripCalculatorApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 
-		Interchanges interchanges = calculator.readInterChangesJSONFile();
+		Interchanges interchanges = calculator.readInterChangesJSONFile("interchanges.json");
 		String source ="Salem Road";
 		String destination = "QEW";
 

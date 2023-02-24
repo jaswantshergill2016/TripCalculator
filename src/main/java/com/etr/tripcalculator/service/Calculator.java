@@ -67,13 +67,13 @@ public class Calculator {
         return distance;
     }
 
-    public Interchanges readInterChangesJSONFile() throws IOException {
+    public Interchanges readInterChangesJSONFile(String jsonFileName) throws IOException {
         GsonBuilder builder = new GsonBuilder();
         //builder.setPrettyPrinting();
 
         Gson gson = builder.create();
 
-        File file = ResourceUtils.getFile("classpath:interchanges.json");
+        File file = ResourceUtils.getFile("classpath:"+jsonFileName);
         String content = new String(Files.readAllBytes(file.toPath()));
         Interchanges interchanges = gson.fromJson(content, Interchanges.class);
         String jsonString = gson.toJson(interchanges);

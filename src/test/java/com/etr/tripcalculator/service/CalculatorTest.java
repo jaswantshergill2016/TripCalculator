@@ -4,6 +4,7 @@ import com.etr.tripcalculator.domain.Interchanges;
 import com.etr.tripcalculator.domain.Trip;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -32,7 +33,7 @@ class CalculatorTest {
     @Test
     void calculateCostOfTrip() throws IOException {
 
-        Interchanges interchanges = calculator.readInterChangesJSONFile();
+        Interchanges interchanges = calculator.readInterChangesJSONFile("interchanges.json");
         Double tripDistance = calculator.calculateDistance("QEW","Salem Road",interchanges);
         Double costOfTrip = calculator.calculateCostOfTrip(tripDistance);
         assertEquals(new Double(28.819250000000004),costOfTrip);
@@ -40,7 +41,7 @@ class CalculatorTest {
 
     @Test
     void calculateDistance() throws IOException {
-        Interchanges interchanges = calculator.readInterChangesJSONFile();
+        Interchanges interchanges = calculator.readInterChangesJSONFile("interchanges.json");
         Double tripDistance = calculator.calculateDistance("QEW","Salem Road",interchanges);
         assertEquals(new Double(115.27700000000002),tripDistance);
     }
@@ -55,7 +56,18 @@ class CalculatorTest {
         Interchanges interchanges = gson.fromJson(content, Interchanges.class);
         String expectedString = gson.toJson(interchanges);
 
-        assertEquals(expectedString,gson.toJson(calculator.readInterChangesJSONFile()));
+        assertEquals(expectedString,gson.toJson(calculator.readInterChangesJSONFile("interchanges.json")));
 
+    }
+
+    @Test
+    void testExpectedException() {
+
+        IOException exception = Assertions.assertThrows(IOException.class, () -> {
+            calculator.readInterChangesJSONFile("interchange.json");
+        });
+
+        Assertions.assertEquals("class path resource [interchange.json] cannot be resolved to absolute file path because it does not exist",
+                exception.getMessage());
     }
 }
