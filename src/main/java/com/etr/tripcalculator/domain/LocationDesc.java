@@ -1,25 +1,9 @@
-package com.etr.tripcalculator;
+package com.etr.tripcalculator.domain;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-public class Interchanges {
-    Map<String, LocationDesc> locations = new HashMap<>();
-
-    public Map<String, LocationDesc> getMap() {
-        return locations;
-    }
-
-    public void setMap(Map<String, LocationDesc> map) {
-        this.locations = map;
-    }
-}
-
-
-
-class LocationDesc {
+public class LocationDesc {
 
     String name;
     Double lat;
@@ -69,34 +53,4 @@ class LocationDesc {
                 '}';
     }
 }
-
-class Route {
-    Integer toId;
-    Double distance;
-
-    public Integer getToId() {
-        return toId;
-    }
-
-    public void setToId(Integer toId) {
-        this.toId = toId;
-    }
-
-    public Double getDistance() {
-        return distance;
-    }
-
-    public void setDistance(Double distance) {
-        this.distance = distance;
-    }
-
-    @Override
-    public String toString() {
-        return "Route{" +
-                "toId=" + toId +
-                ", distance=" + distance +
-                '}';
-    }
-}
-
 

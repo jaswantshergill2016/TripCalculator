@@ -1,8 +1,13 @@
-package com.etr.tripcalculator;
+package com.etr.tripcalculator.service;
 
+import com.etr.tripcalculator.domain.Interchanges;
+import com.etr.tripcalculator.domain.LocationDesc;
+import com.etr.tripcalculator.domain.Route;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.util.ResourceUtils;
 
 import java.io.File;
@@ -10,7 +15,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.util.Map;
 
-@Component
+@Service
+@Slf4j
 public class Calculator {
     public static final Double TOLL_RATE_PER_KM = 0.25;
 
@@ -19,7 +25,7 @@ public class Calculator {
         return TOLL_RATE_PER_KM * distance;
     }
 
-    public static Double calculateDistance(String source, String destination, Map<String,LocationDesc> locationsMap) {
+    public static Double calculateDistance(String source, String destination, Map<String, LocationDesc> locationsMap) {
         String sourceId ="0";
         String  destinationId ="0";
 
@@ -37,8 +43,12 @@ public class Calculator {
             }
         }
 
-        System.out.println("source  ==>  "+ source+" ID ==> "+ sourceId);
-        System.out.println("destination  ==>  "+  destination+" ID ==> "+destinationId);
+        //System.out.println("source  ==>  "+ source+" ID ==> "+ sourceId);
+        log.info("source  ==>  "+ source+" ID ==> "+ sourceId);
+        //System.out.println("destination  ==>  "+  destination+" ID ==> "+destinationId);
+        log.info("destination  ==>  "+  destination+" ID ==> "+destinationId);
+
+
         int sourceID = Integer.parseInt(sourceId);
         int destinationID = Integer.parseInt(destinationId);
         Double distance = 0.0;
@@ -71,8 +81,9 @@ public class Calculator {
         File file = ResourceUtils.getFile("classpath:interchanges.json");
         String content = new String(Files.readAllBytes(file.toPath()));
         Interchanges interchanges = gson.fromJson(content, Interchanges.class);
-        //jsonString = gson.toJson(interchanges);
+        //String jsonString = gson.toJson(interchanges);
         //System.out.println(jsonString);
+        //log.info(jsonString);
 
         return interchanges.getMap();
 
