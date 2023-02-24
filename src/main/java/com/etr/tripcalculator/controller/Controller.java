@@ -1,6 +1,7 @@
 package com.etr.tripcalculator.controller;
 
 
+import com.etr.tripcalculator.domain.Interchanges;
 import com.etr.tripcalculator.service.Calculator;
 import com.etr.tripcalculator.domain.LocationDesc;
 import com.etr.tripcalculator.domain.Trip;
@@ -25,13 +26,15 @@ public class Controller {
 
     @PostMapping("/trip")
     public ResponseEntity<Trip> login(@RequestBody Trip trip) throws IOException {
-        Map<String, LocationDesc> map = calculator.readInterChangesJSONFile();
+        Interchanges interchanges = calculator.readInterChangesJSONFile();
 
-        Double distance = calculator.calculateDistance(trip.getSource(),trip.getDestination(),map);
+        Double distance = calculator.calculateDistance(trip.getSource(),trip.getDestination(),interchanges);
 
         log.info("Total distance "+distance);
 
         Double costOfTrip = calculator.calculateCostOfTrip(distance);
+
+        log.info("Cost of Trip "+ costOfTrip);
 
         Trip responseTrip = new Trip();
         responseTrip.setSource(trip.getSource());

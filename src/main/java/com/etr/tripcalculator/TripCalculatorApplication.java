@@ -1,6 +1,7 @@
 package com.etr.tripcalculator;
 
 
+import com.etr.tripcalculator.domain.Interchanges;
 import com.etr.tripcalculator.domain.LocationDesc;
 import com.etr.tripcalculator.service.Calculator;
 import lombok.extern.slf4j.Slf4j;
@@ -27,21 +28,19 @@ public class TripCalculatorApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 
-		Map<String, LocationDesc> map = calculator.readInterChangesJSONFile();
+		Interchanges interchanges = calculator.readInterChangesJSONFile();
 		String source ="Salem Road";
 		String destination = "QEW";
 
 		source ="QEW";
 		destination = "Salem Road";
 
-		Double distance = calculator.calculateDistance(source,destination,map);
+		Double distance = calculator.calculateDistance(source,destination,interchanges);
 
-		//System.out.println("Total distance "+distance);
 		log.info("Total distance "+distance);
 
 		Double costOfTrip = calculator.calculateCostOfTrip(distance);
 
-		//System.out.println("Cost of Trip "+ costOfTrip);
 		log.info("Cost of Trip "+ costOfTrip);
 
 	}
